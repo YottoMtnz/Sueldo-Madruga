@@ -12,7 +12,7 @@ Type your hourly pay and hours, pick your pay schedule, filing status and state,
 
 ## Cómo calcula / How it works
 
-- **Impuesto federal / Federal tax:** calculado de verdad, con las tablas oficiales del IRS de 2026 y sus tramos (10–37 %) según tu estado civil — ya no es un porcentaje inventado. / Computed for real, with the official IRS 2026 tables and brackets (10–37%) for your filing status.
+- **Impuesto federal / Federal tax:** calculado con las tablas oficiales del IRS de 2026 y sus tramos (10–37 %) según tu estado civil. / Calculated with the official IRS 2026 tables and brackets (10–37%) for your filing status.
 - **Seguro Social / Social Security:** 6.2 %, con el tope salarial de 2026 ($184,500).
 - **Medicare:** 1.45 % (+0.9 % sobre lo que pase de $200,000 al año).
 - **Impuesto estatal / State tax:** los 50 estados + DC, con tasas estatales de 2025 aproximadas; 9 estados no cobran nada. / All 50 states + DC, with approximate 2025 state rates; 9 states charge nothing.
