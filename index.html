@@ -79,7 +79,7 @@
   .install-help{background:rgba(45,212,191,.07); border:1px solid rgba(45,212,191,.28); border-radius:16px; padding:14px 16px; color:#cfe8e3; font-size:14px; line-height:1.6}
   .install-help b{color:var(--teal2)}
   .inputs{display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:14px}
-  .inputs3{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:14px; margin-top:14px}
+  .inputs3{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:14px; margin-top:14px}
   @media (max-width:560px){ .inputs3{grid-template-columns:minmax(0,1fr)} }
   @media (max-width:480px){ .inputs{grid-template-columns:minmax(0,1fr)} }
   label{display:block; font-size:13px; font-weight:600; color:var(--mut); margin-bottom:8px; text-transform:uppercase; letter-spacing:.6px}
@@ -193,6 +193,14 @@
         <label for="state" data-es="¿En qué estado vives?" data-en="Which state do you live in?">¿En qué estado vives?</label>
         <div class="field"><select id="state"></select><span class="chev">▾</span></div>
       </div>
+      <div>
+        <label for="ot" data-es="Horas extra (más de 40/semana)" data-en="Overtime (over 40/week)">Horas extra (más de 40/semana)</label>
+        <div class="field"><select id="ot">
+          <option value="1.5" selected data-es="Tiempo y medio (1.5×)" data-en="Time and a half (1.5×)">Tiempo y medio (1.5×)</option>
+          <option value="1" data-es="Misma tarifa siempre" data-en="Same rate always">Misma tarifa siempre</option>
+          <option value="2" data-es="Doble tiempo (2×)" data-en="Double time (2×)">Doble tiempo (2×)</option>
+        </select><span class="chev">▾</span></div>
+      </div>
     </div>
   </section>
 
@@ -227,7 +235,7 @@
       <p data-es="Es tu jubilación y tu protección si un día no puedes trabajar. Lo paga todo empleado en EE. UU., y tu empleador pone otro 6.2 % igual que tú (aunque no lo veas en tu cheque). En 2026 se cobra solo sobre los primeros $184,500 que ganes en el año." data-en="It's your retirement and your protection if one day you can't work. Every employee in the U.S. pays it, and your employer matches another 6.2% on top (you just don't see it on your check). In 2026 it's charged only on the first $184,500 you earn in the year.">Es tu jubilación y tu protección si un día no puedes trabajar. Lo paga todo empleado en EE. UU., y tu empleador pone otro 6.2 % igual que tú (aunque no lo veas en tu cheque). En 2026 se cobra solo sobre los primeros $184,500 que ganes en el año.</p>
     </div></div>
     <div class="item"><i class="dot d-med" style="margin-top:5px"></i><div>
-      <h3>Medicare — 1.45 %</h3>
+      <h3 data-es="Medicare — 1.45 %" data-en="Medicare — 1.45%">Medicare — 1.45 %</h3>
       <p data-es="Paga el seguro de salud para cuando cumplas 65 años. No tiene tope: se cobra sobre todo lo que ganas. Si ganas más de $200,000 al año, se suma un 0.9 % extra sobre lo que pase de ahí." data-en="It pays for health coverage when you turn 65. It has no cap: it's charged on everything you earn. If you make over $200,000 a year, an extra 0.9% applies to the amount above that.">Paga el seguro de salud para cuando cumplas 65 años. No tiene tope: se cobra sobre todo lo que ganas. Si ganas más de $200,000 al año, se suma un 0.9 % extra sobre lo que pase de ahí.</p>
     </div></div>
     <div class="item"><i class="dot d-st" style="margin-top:5px"></i><div>
@@ -237,6 +245,10 @@
     <div class="item"><i class="dot d-net" style="margin-top:5px"></i><div>
       <h3 data-es="Otros posibles descuentos" data-en="Other possible deductions">Otros posibles descuentos</h3>
       <p data-es="Además de los impuestos, un cheque puede incluir descuentos por beneficios contratados por el empleado, como el seguro médico o el plan de jubilación 401(k). No son impuestos y varían según cada empleador." data-en="In addition to taxes, a paycheck may include deductions for benefits the employee enrolled in, such as health insurance or a 401(k) retirement plan. These are not taxes and vary by employer.">Además de los impuestos, un cheque puede incluir descuentos por beneficios contratados por el empleado, como el seguro médico o el plan de jubilación 401(k). No son impuestos y varían según cada empleador.</p>
+    </div>
+    <div class="item"><i class="dot d-net" style="margin-top:5px"></i><div>
+      <h3 data-es="⏱️ Horas extra" data-en="⏱️ Overtime">⏱️ Horas extra</h3>
+      <p data-es="Por ley federal, las horas que pasan de 40 en una semana se pagan a tiempo y medio (1.5 veces tu tarifa) en la mayoría de los trabajos por hora. Hay excepciones: el trabajo agrícola, por ejemplo, está exento de esa regla federal y paga todas las horas a la misma tarifa. Por eso la calculadora tiene un selector de horas extra: elige cómo las pagan en tu empleo." data-en="Under federal law, hours over 40 in a week are paid at time and a half (1.5 times your rate) in most hourly jobs. There are exceptions: farm work, for example, is exempt from that federal rule and pays every hour at the same rate. That's why the calculator has an overtime selector: choose how your job pays them.">Por ley federal, las horas que pasan de 40 en una semana se pagan a tiempo y medio (1.5 veces tu tarifa) en la mayoría de los trabajos por hora. Hay excepciones: el trabajo agrícola, por ejemplo, está exento de esa regla federal y paga todas las horas a la misma tarifa. Por eso la calculadora tiene un selector de horas extra: elige cómo las pagan en tu empleo.</p>
     </div></div>
   </section>
 
@@ -254,7 +266,7 @@
 <script>
 const $ = id => document.getElementById(id);
 const els = { rate:$('rate'), hours:$('hours'), range:$('hoursRange'),
-  freq:$('freq'), status:$('status'), state:$('state'), extra:$('extra') };
+  freq:$('freq'), status:$('status'), state:$('state'), ot:$('ot'), extra:$('extra') };
 const r2 = x => Math.round(x * 100) / 100;
 const fmt = x => x.toLocaleString('en-US', { style:'currency', currency:'USD' });
 const num = (el, d) => { const v = parseFloat(el.value); return isNaN(v) || v < 0 ? d : v; };
@@ -387,8 +399,12 @@ function calc(){
   const status = els.status.value || 'single';
   // Las horas son SIEMPRE por semana: la frecuencia solo agrupa los pagos.
   // Así el ingreso anual es el mismo trabajo, y el cheque crece según el periodo.
+  // Horas extra según el selector: 1.5× (ley federal general), misma tarifa
+  // (p. ej. trabajo agrícola, exento de la regla federal) o 2× (doble tiempo).
+  const multExtra = parseFloat(els.ot.value) || 1.5;
+  const pagoSemanal = rate * Math.min(hours, 40) + rate * multExtra * Math.max(0, hours - 40);
   const horasCheque = hours * 52 / periods;
-  const gross = r2(rate * horasCheque);
+  const gross = r2(pagoSemanal * 52 / periods);
   const anual = gross * periods;
 
   const fed = FED[status] || FED.single;
@@ -419,13 +435,13 @@ function calc(){
   const netEl = $('vNet');
   if (fmt(net) !== netEl.textContent) { netEl.classList.remove('pulso'); void netEl.offsetWidth; netEl.classList.add('pulso'); }
   animar({ gross, fwt, ss, med, st, net, perHour: horasCheque > 0 ? r2(net / horasCheque) : 0, year: r2(net * periods) });
-  try { localStorage.setItem('sueldoMadruga', JSON.stringify({ rate: els.rate.value, hours: els.hours.value, freq: els.freq.value, status: els.status.value, state: els.state.value, extra: els.extra.value })); } catch(e){}
+  try { localStorage.setItem('sueldoMadruga', JSON.stringify({ rate: els.rate.value, hours: els.hours.value, freq: els.freq.value, status: els.status.value, state: els.state.value, ot: els.ot.value, extra: els.extra.value })); } catch(e){}
 }
 
 els.rate.addEventListener('input', calc);
 els.hours.addEventListener('input', () => { els.range.value = els.hours.value; calc(); });
 els.range.addEventListener('input', () => { els.hours.value = els.range.value; calc(); });
-[els.freq, els.status, els.state, els.extra].forEach(e => e.addEventListener('input', calc));
+[els.freq, els.status, els.state, els.ot, els.extra].forEach(e => e.addEventListener('input', calc));
 els.extra.addEventListener('input', calc);
 
 llenarEstados();
