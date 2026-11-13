@@ -1,5 +1,5 @@
 // Service worker de «¿Cuánto me toca?» — guarda la app para que se instale y abra sin conexión.
-const CACHE = "cmt-v5";
+const CACHE = "cmt-v6";
 const CORE = ["./", "./index.html", "./manifest.webmanifest", "./icon-192.png", "./icon-512.png", "./icon-maskable-512.png", "./apple-touch-icon.png"];
 
 self.addEventListener("install", (e) => {
