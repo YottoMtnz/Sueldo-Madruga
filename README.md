@@ -12,6 +12,8 @@ Type your hourly pay and hours, pick your pay schedule, filing status and state,
 
 ## Cómo calcula / How it works
 
+Las horas se escriben **por semana** (así piensa todo el mundo su horario) y la frecuencia solo agrupa los pagos: el mismo trabajo paga lo mismo al año, en cheques semanales pequeños o en un cheque mensual grande. / Hours are entered **per week** (that's how everyone thinks of their schedule) and the pay frequency only groups the payments: the same job pays the same per year, in small weekly checks or one big monthly check.
+
 - **Impuesto federal / Federal tax:** calculado con las tablas oficiales del IRS de 2026 y sus tramos (10–37 %) según tu estado civil. / Calculated with the official IRS 2026 tables and brackets (10–37%) for your filing status.
 - **Seguro Social / Social Security:** 6.2 %, con el tope salarial de 2026 ($184,500).
 - **Medicare:** 1.45 % (+0.9 % sobre lo que pase de $200,000 al año).

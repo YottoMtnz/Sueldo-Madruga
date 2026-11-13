@@ -166,7 +166,7 @@
         <div class="field"><span class="sym">$</span><input id="rate" type="number" inputmode="decimal" min="0" step="0.01" value="18.13"><span class="unit">USD</span></div>
       </div>
       <div>
-        <label for="hours" data-es="Horas trabajadas" data-en="Hours worked">Horas trabajadas</label>
+        <label for="hours" data-es="Horas por semana" data-en="Hours per week">Horas por semana</label>
         <div class="field"><input id="hours" type="number" inputmode="decimal" min="0" step="0.25" value="40"><span class="unit" data-es="horas" data-en="hours">horas</span></div>
         <input id="hoursRange" type="range" min="0" max="80" step="0.25" value="40">
       </div>
@@ -385,7 +385,10 @@ function calc(){
   const rate = num(els.rate, 0), hours = num(els.hours, 0);
   const periods = parseInt(els.freq.value, 10) || 52;
   const status = els.status.value || 'single';
-  const gross = r2(rate * hours);
+  // Las horas son SIEMPRE por semana: la frecuencia solo agrupa los pagos.
+  // Así el ingreso anual es el mismo trabajo, y el cheque crece según el periodo.
+  const horasCheque = hours * 52 / periods;
+  const gross = r2(rate * horasCheque);
   const anual = gross * periods;
 
   const fed = FED[status] || FED.single;
@@ -415,7 +418,7 @@ function calc(){
   els.range.style.setProperty('--p', Math.min(100, hours / max * 100) + '%');
   const netEl = $('vNet');
   if (fmt(net) !== netEl.textContent) { netEl.classList.remove('pulso'); void netEl.offsetWidth; netEl.classList.add('pulso'); }
-  animar({ gross, fwt, ss, med, st, net, perHour: hours > 0 ? r2(net / hours) : 0, year: r2(net * periods) });
+  animar({ gross, fwt, ss, med, st, net, perHour: horasCheque > 0 ? r2(net / horasCheque) : 0, year: r2(net * periods) });
   try { localStorage.setItem('sueldoMadruga', JSON.stringify({ rate: els.rate.value, hours: els.hours.value, freq: els.freq.value, status: els.status.value, state: els.state.value, extra: els.extra.value })); } catch(e){}
 }
 
