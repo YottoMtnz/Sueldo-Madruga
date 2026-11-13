@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>¿Cuánto me toca? — Calculadora de sueldo neto</title>
-<meta name="description" content="Calculadora de sueldo neto para EE. UU.: escribe cuánto ganas por hora y tus horas, elige tu estado, y mira cuánto te quitan de impuestos y cuánto te llega al banco.">
+<meta name="description" content="Calculadora de sueldo neto para Estados Unidos: calcula tus impuestos federales y estatales, conoce el detalle de cada deducción y el monto neto que recibirás.">
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#070914">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
@@ -148,7 +148,7 @@
 <header>
   <div class="brand">
     <h1>¿Cuánto <span>me toca?</span></h1>
-    <p data-es="Tu sueldo neto, claro como el agua: cuánto te quitan, por qué, y cuánto te llega al banco." data-en="Your net pay, plain and clear: what they take out, why, and what hits your bank.">Tu sueldo neto, claro como el agua: cuánto te quitan, por qué, y cuánto te llega al banco.</p>
+    <p data-es="Calcula tu sueldo neto con el detalle de cada deducción: impuestos federales y estatales, y el monto que recibirás en tu cuenta." data-en="Calculate your net pay with a full breakdown of every deduction: federal and state taxes, and the amount you will receive in your account.">Calcula tu sueldo neto con el detalle de cada deducción: impuestos federales y estatales, y el monto que recibirás en tu cuenta.</p>
   </div>
   <div class="lang"><button id="btnEs" class="on">ES</button><button id="btnEn">EN</button></div>
 </header>
@@ -211,13 +211,13 @@
   </section>
 
   <section class="stats">
-    <div class="stat"><div class="k" data-es="Neto por hora" data-en="Net per hour">Neto por hora</div><div class="v" id="vPerHour">—</div><div class="s" data-es="lo que de verdad ganas por cada hora" data-en="what you really earn for each hour">lo que de verdad ganas por cada hora</div></div>
+    <div class="stat"><div class="k" data-es="Neto por hora" data-en="Net per hour">Neto por hora</div><div class="v" id="vPerHour">—</div><div class="s" data-es="lo que realmente recibes por cada hora trabajada" data-en="what you actually take home for each hour worked">lo que realmente recibes por cada hora trabajada</div></div>
     <div class="stat"><div class="k" data-es="Al año (estimado)" data-en="Per year (estimate)">Al año (estimado)</div><div class="v" id="vYear">—</div><div class="s" data-es="si cada pago fuera igual todo el año" data-en="if every check were the same all year">si cada pago fuera igual todo el año</div></div>
   </section>
 
   <section class="card edu">
     <h2 data-es="Entiende tu cheque 🧾" data-en="Understand your paycheck 🧾">Entiende tu cheque 🧾</h2>
-    <p class="intro" data-es="La gente dice «me quitan los taxes» sin saber adónde va cada dólar. No debería ser así: esto es lo que te quitan y por qué." data-en="People say “they take my taxes” without knowing where each dollar goes. It shouldn't be that way: this is what they take, and why.">La gente dice «me quitan los taxes» sin saber adónde va cada dólar. No debería ser así: esto es lo que te quitan y por qué.</p>
+    <p class="intro" data-es="Cada deducción de tu cheque tiene un destino y una explicación. A continuación encontrarás, de forma clara y sencilla, qué se retiene de tu sueldo y por qué." data-en="Every deduction on your paycheck has a purpose and an explanation. Below you will find, clearly and simply, what is withheld from your pay and why.">Cada deducción de tu cheque tiene un destino y una explicación. A continuación encontrarás, de forma clara y sencilla, qué se retiene de tu sueldo y por qué.</p>
     <div class="item"><i class="dot d-fwt" style="margin-top:5px"></i><div>
       <h3 data-es="Impuesto federal — va por tramos" data-en="Federal tax — it works in brackets">Impuesto federal — va por tramos</h3>
       <p data-es="No es un porcentaje fijo. Primero, una parte de tu sueldo no paga nada: la deducción estándar (en 2026, $16,100 al año si eres soltero). Lo que queda paga por escalones: 10 %, 12 %, 22 %… cada tramo solo sobre los dólares de ese escalón. Por eso a dos compañeros con el mismo sueldo les pueden quitar distinto: depende de su formulario W-4, de si son casados, de si tienen hijos." data-en="It's not a flat percentage. First, part of your pay owes nothing: the standard deduction ($16,100 a year if you're single, in 2026). What's left is taxed in steps — 10%, 12%, 22%… each rate only on the dollars inside that step. That's why two coworkers with the same pay can have different withholding: it depends on their W-4 form, whether they're married, whether they have kids.">No es un porcentaje fijo. Primero, una parte de tu sueldo no paga nada: la deducción estándar (en 2026, $16,100 al año si eres soltero). Lo que queda paga por escalones: 10 %, 12 %, 22 %… cada tramo solo sobre los dólares de ese escalón. Por eso a dos compañeros con el mismo sueldo les pueden quitar distinto: depende de su formulario W-4, de si son casados, de si tienen hijos.</p>
@@ -235,8 +235,8 @@
       <p data-es="Nueve estados no cobran impuesto estatal sobre el sueldo: Alaska, Florida, Nevada, New Hampshire, Dakota del Sur, Tennessee, Texas, Washington y Wyoming. Los demás cobran un porcentaje fijo o también van por tramos. Por eso esta calculadora te pide tu estado." data-en="Nine states charge no state income tax on wages: Alaska, Florida, Nevada, New Hampshire, South Dakota, Tennessee, Texas, Washington and Wyoming. The rest charge a flat rate or use brackets too. That's why this calculator asks for your state.">Nueve estados no cobran impuesto estatal sobre el sueldo: Alaska, Florida, Nevada, New Hampshire, Dakota del Sur, Tennessee, Texas, Washington y Wyoming. Los demás cobran un porcentaje fijo o también van por tramos. Por eso esta calculadora te pide tu estado.</p>
     </div></div>
     <div class="item"><i class="dot d-net" style="margin-top:5px"></i><div>
-      <h3 data-es="¿Tu cheque trae más descuentos?" data-en="Does your check show more deductions?">¿Tu cheque trae más descuentos?</h3>
-      <p data-es="Lo que no es impuesto son beneficios que elegiste: seguro médico, plan de jubilación 401(k), etc. Esos no son taxes y cambian en cada trabajo. Los tres o cuatro de arriba son los impuestos de verdad." data-en="Anything that isn't a tax is a benefit you chose: health insurance, a 401(k) retirement plan, and so on. Those aren't taxes and they differ at every job. The three or four above are the real taxes.">Lo que no es impuesto son beneficios que elegiste: seguro médico, plan de jubilación 401(k), etc. Esos no son taxes y cambian en cada trabajo. Los tres o cuatro de arriba son los impuestos de verdad.</p>
+      <h3 data-es="Otros posibles descuentos" data-en="Other possible deductions">Otros posibles descuentos</h3>
+      <p data-es="Además de los impuestos, un cheque puede incluir descuentos por beneficios contratados por el empleado, como el seguro médico o el plan de jubilación 401(k). No son impuestos y varían según cada empleador." data-en="In addition to taxes, a paycheck may include deductions for benefits the employee enrolled in, such as health insurance or a 401(k) retirement plan. These are not taxes and vary by employer.">Además de los impuestos, un cheque puede incluir descuentos por beneficios contratados por el empleado, como el seguro médico o el plan de jubilación 401(k). No son impuestos y varían según cada empleador.</p>
     </div></div>
   </section>
 
