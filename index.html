@@ -19,7 +19,7 @@
     color-scheme: dark;
     --bg:#070914; --card:#0d1526; --card2:#111c33; --line:#1e2c47;
     --txt:#eef4ff; --mut:#93a5c4; --teal:#2dd4bf; --teal2:#5eead4;
-    --fwt:#fb7a8c; --ss:#a5b4fc; --med:#fbbf24; --st:#c084fc;
+    --fwt:#fb7a8c; --ss:#a5b4fc; --med:#fbbf24; --st:#c084fc; --pre:#38bdf8; --k401:#e879f9;
   }
   *{margin:0;padding:0;box-sizing:border-box;min-width:0}
   html,body{overflow-x:clip}
@@ -109,11 +109,15 @@
   .bar i{display:block; height:100%; transition:width .6s cubic-bezier(.22,1,.36,1)}
   .bar .b-net{background:linear-gradient(90deg, var(--teal), var(--teal2))}
   .bar .b-fwt{background:var(--fwt)} .bar .b-ss{background:var(--ss)} .bar .b-med{background:var(--med)} .bar .b-st{background:var(--st)}
+  .bar .b-pre{background:var(--pre)} .bar .b-k401{background:var(--k401)}
   .row{display:flex; align-items:center; justify-content:space-between; gap:8px; padding:13px 2px; border-bottom:1px solid rgba(30,44,71,.7); font-size:16px}
   .row:last-of-type{border-bottom:0}
   .row .name{display:flex; align-items:center; gap:10px; color:#dbe6fa}
   .dot{width:12px; height:12px; border-radius:4px; flex:none}
   .d-fwt{background:var(--fwt)} .d-ss{background:var(--ss)} .d-med{background:var(--med)} .d-net{background:var(--teal)} .d-st{background:var(--st)}
+  .d-pre{background:var(--pre)} .d-k401{background:var(--k401)}
+  .check{display:flex; gap:9px; align-items:flex-start; margin:12px 0 4px; font-size:14.5px; cursor:pointer}
+  .check input{width:19px; height:19px; margin-top:1px; accent-color:var(--teal); flex:none}
   .row .val{font-weight:600; white-space:nowrap; flex:none}
   .row.net{font-size:19px; font-weight:800}
   .row.net .val{color:var(--teal2); text-shadow:0 0 18px rgba(45,212,191,.35)}
@@ -208,13 +212,15 @@
     <h2 data-es="Tu sueldo" data-en="Your pay">Tu sueldo</h2>
     <p class="lead"><span data-es="Te descuentan el" data-en="They take out">Te descuentan el</span> <b id="pctTotal">13.87&nbsp;%</b> <span data-es="de tu sueldo bruto." data-en="of your gross pay.">de tu sueldo bruto.</span></p>
     <div class="bar">
-      <i class="b-net" id="segNet"></i><i class="b-fwt" id="segFwt"></i><i class="b-ss" id="segSs"></i><i class="b-med" id="segMed"></i><i class="b-st" id="segSt"></i>
+      <i class="b-net" id="segNet"></i><i class="b-fwt" id="segFwt"></i><i class="b-ss" id="segSs"></i><i class="b-med" id="segMed"></i><i class="b-pre" id="segPre"></i><i class="b-k401" id="seg401"></i><i class="b-st" id="segSt"></i>
     </div>
     <div class="row"><span class="name" data-es="Sueldo bruto" data-en="Gross pay">Sueldo bruto</span><span class="val" id="vGross">—</span></div>
     <div class="row"><span class="name"><i class="dot d-fwt"></i><span data-es="Impuesto federal" data-en="Federal tax">Impuesto federal</span>&nbsp;<span style="color:var(--mut)" id="lblFwt"></span></span><span class="val" id="vFwt">—</span></div>
     <div class="row"><span class="name"><i class="dot d-ss"></i><span data-es="Seguro Social" data-en="Social Security">Seguro Social</span>&nbsp;<span style="color:var(--mut)">(6.2 %)</span></span><span class="val" id="vSs">—</span></div>
     <div class="row"><span class="name"><i class="dot d-med"></i>Medicare&nbsp;<span style="color:var(--mut)">(1.45 %)</span></span><span class="val" id="vMed">—</span></div>
     <div class="row"><span class="name"><i class="dot d-st"></i><span data-es="Impuesto estatal" data-en="State tax">Impuesto estatal</span>&nbsp;<span style="color:var(--mut)" id="lblState"></span></span><span class="val" id="vState">—</span></div>
+    <div class="row" id="rowPre" hidden><span class="name"><i class="dot d-pre"></i><span data-es="Beneficios (antes de impuestos)" data-en="Benefits (pre-tax)">Beneficios (antes de impuestos)</span></span><span class="val" id="vPre">—</span></div>
+    <div class="row" id="row401" hidden><span class="name"><i class="dot d-k401"></i>401(k)</span><span class="val" id="v401">—</span></div>
     <div class="row net"><span class="name"><i class="dot d-net"></i><span data-es="Te llega al banco (neto)" data-en="You take home (net)">Te llega al banco (neto)</span></span><span class="val" id="vNet">—</span></div>
   </section>
 
@@ -244,7 +250,7 @@
     </div></div>
     <div class="item"><i class="dot d-net" style="margin-top:5px"></i><div>
       <h3 data-es="Otros posibles descuentos" data-en="Other possible deductions">Otros posibles descuentos</h3>
-      <p data-es="Además de los impuestos, un cheque puede incluir descuentos por beneficios contratados por el empleado, como el seguro médico o el plan de jubilación 401(k). No son impuestos y varían según cada empleador." data-en="In addition to taxes, a paycheck may include deductions for benefits the employee enrolled in, such as health insurance or a 401(k) retirement plan. These are not taxes and vary by employer.">Además de los impuestos, un cheque puede incluir descuentos por beneficios contratados por el empleado, como el seguro médico o el plan de jubilación 401(k). No son impuestos y varían según cada empleador.</p>
+      <p data-es="Además de los impuestos, un cheque puede incluir descuentos por beneficios contratados por el empleado, como el seguro médico o el plan de jubilación 401(k). No son impuestos y varían según cada empleador. El seguro médico suele salir antes de impuestos: baja el sueldo sobre el que se calculan el impuesto federal, el Seguro Social y Medicare. El 401(k) también sale antes del impuesto federal, pero no del Seguro Social ni de Medicare. Por eso dos compañeros con la misma tarifa pueden llevarse cheques distintos: puedes escribir tus montos en «Tu situación», más abajo." data-en="In addition to taxes, a paycheck may include deductions for benefits the employee enrolled in, such as health insurance or a 401(k) retirement plan. These are not taxes and vary by employer. Health insurance usually comes out pre-tax: it lowers the wages that federal tax, Social Security and Medicare are calculated on. A 401(k) also comes out before federal tax, but not before Social Security or Medicare. That's why two coworkers earning the same rate can take home different checks: you can enter your amounts under “Your situation”, below.">Además de los impuestos, un cheque puede incluir descuentos por beneficios contratados por el empleado, como el seguro médico o el plan de jubilación 401(k). No son impuestos y varían según cada empleador. El seguro médico suele salir antes de impuestos: baja el sueldo sobre el que se calculan el impuesto federal, el Seguro Social y Medicare. El 401(k) también sale antes del impuesto federal, pero no del Seguro Social ni de Medicare. Por eso dos compañeros con la misma tarifa pueden llevarse cheques distintos: puedes escribir tus montos en «Tu situación», más abajo.</p>
     </div>
     <div class="item"><i class="dot d-net" style="margin-top:5px"></i><div>
       <h3 data-es="⏱️ Horas extra" data-en="⏱️ Overtime">⏱️ Horas extra</h3>
@@ -256,6 +262,20 @@
     <summary data-es="⚙️ Retención extra (opcional)" data-en="⚙️ Extra withholding (optional)">⚙️ Retención extra (opcional)</summary>
     <div class="field"><span class="sym">$</span><input id="extra" type="number" inputmode="decimal" min="0" step="1" value="0"><span class="unit" data-es="por cheque" data-en="per check">por cheque</span></div>
     <p data-es="Es el extra que algunas personas piden en su formulario W-4 para que les quiten un poco más en cada cheque. Déjalo en 0 si no es tu caso. El Seguro Social y Medicare son fijos por ley (6.2 % y 1.45 %) y no se editan." data-en="This is the extra amount some people request on their W-4 form to have a little more taken out of each check. Leave it at 0 if that's not you. Social Security and Medicare are fixed by law (6.2% and 1.45%) and can't be edited.">Es el extra que algunas personas piden en su formulario W-4 para que les quiten un poco más en cada cheque. Déjalo en 0 si no es tu caso. El Seguro Social y Medicare son fijos por ley (6.2 % y 1.45 %) y no se editan.</p>
+  </details>
+
+  <details>
+    <summary data-es="👨‍👩‍👧 Tu situación (opcional)" data-en="👨‍👩‍👧 Your situation (optional)">👨‍👩‍👧 Tu situación (opcional)</summary>
+    <p data-es="Aquí está la respuesta a por qué a dos compañeros con la misma tarifa les retienen distinto: manda su formulario W-4 y sus beneficios, no solo lo que ganan. Los hijos y dependientes bajan el impuesto federal — con suficientes, puede salir en $0 y es correcto —. Si tu pareja también trabaja (o tienes dos empleos), se retiene más. Y el seguro médico o el 401(k) salen antes de impuestos, así que bajan la base sobre la que se calcula casi todo." data-en="This is the answer to why two coworkers earning the same rate can have different withholding: their W-4 form and their benefits decide it, not just their pay. Children and dependents lower the federal tax — with enough of them, it can come out to $0, and that's correct. If your spouse also works (or you hold two jobs), more is withheld. And health insurance or a 401(k) come out before taxes, so they lower the base almost everything is calculated on.">Aquí está la respuesta a por qué a dos compañeros con la misma tarifa les retienen distinto: manda su formulario W-4 y sus beneficios, no solo lo que ganan. Los hijos y dependientes bajan el impuesto federal — con suficientes, puede salir en $0 y es correcto —. Si tu pareja también trabaja (o tienes dos empleos), se retiene más. Y el seguro médico o el 401(k) salen antes de impuestos, así que bajan la base sobre la que se calcula casi todo.</p>
+    <div class="inputs">
+      <div><label for="hijos" data-es="Hijos menores de 17 años" data-en="Children under 17">Hijos menores de 17 años</label><div class="field"><input id="hijos" type="number" inputmode="numeric" min="0" step="1" value="0"><span class="unit" data-es="hijos" data-en="kids">hijos</span></div></div>
+      <div><label for="dep" data-es="Otros dependientes" data-en="Other dependents">Otros dependientes</label><div class="field"><input id="dep" type="number" inputmode="numeric" min="0" step="1" value="0"><span class="unit" data-es="personas" data-en="people">personas</span></div></div>
+    </div>
+    <label class="check"><input id="dostrab" type="checkbox"><span data-es="Mi pareja también trabaja, o tengo dos empleos (esto se marca en el W-4 y sube la retención)" data-en="My spouse also works, or I have two jobs (this is a W-4 checkbox and raises withholding)">Mi pareja también trabaja, o tengo dos empleos (esto se marca en el W-4 y sube la retención)</span></label>
+    <div class="inputs">
+      <div><label for="pre" data-es="Seguro médico y beneficios (antes de impuestos)" data-en="Health insurance &amp; benefits (pre-tax)">Seguro médico y beneficios (antes de impuestos)</label><div class="field"><span class="sym">$</span><input id="pre" type="number" inputmode="decimal" min="0" step="1" value="0"><span class="unit" data-es="por cheque" data-en="per check">por cheque</span></div></div>
+      <div><label for="k401" data-es="Aporte al 401(k)" data-en="401(k) contribution">Aporte al 401(k)</label><div class="field"><span class="sym">$</span><input id="k401" type="number" inputmode="decimal" min="0" step="1" value="0"><span class="unit" data-es="por cheque" data-en="per check">por cheque</span></div></div>
+    </div>
   </details>
 
   <details>
@@ -279,6 +299,7 @@
 const $ = id => document.getElementById(id);
 const els = { rate:$('rate'), hours:$('hours'), range:$('hoursRange'),
   freq:$('freq'), status:$('status'), state:$('state'), ot:$('ot'), extra:$('extra'),
+  hijos:$('hijos'), dep:$('dep'), pre:$('pre'), k401:$('k401'), dostrab:$('dostrab'),
   w1:$('w1'), w2:$('w2'), w3:$('w3'), w4:$('w4'), w5:$('w5') };
 const r2 = x => Math.round(x * 100) / 100;
 const fmt = x => x.toLocaleString('en-US', { style:'currency', currency:'USD' });
@@ -432,18 +453,38 @@ function calc(){
   }
   const anual = gross * periods;
 
+  // La situación personal (el W-4 y los beneficios): por esto dos personas con
+  // la misma tarifa retienen distinto. Todo en 0 = el cálculo de siempre.
+  // - Hijos <17: $2,000 de crédito anual cada uno; otros dependientes: $500
+  //   (paso 3 del W-4: resta directo del impuesto federal, puede dejarlo en $0).
+  // - Pareja que trabaja / dos empleos (paso 2c del W-4): la deducción
+  //   estándar cuenta a la mitad, como manda la Pub. 15-T del IRS.
+  // - Seguro médico y beneficios (plan cafetería): salen antes de impuestos y
+  //   bajan la base del federal, del Seguro Social, de Medicare y del estatal.
+  // - 401(k): sale antes del impuesto federal, pero NO del Seguro Social ni
+  //   de Medicare (por ley pagan sobre el sueldo completo).
+  const pre = num(els.pre, 0), k401 = num(els.k401, 0);
+  const creditoDep = num(els.hijos, 0) * 2000 + num(els.dep, 0) * 500;
+  const baseFed = Math.max(0, anual - (pre + k401) * periods);
+  const baseFica = Math.max(0, anual - pre * periods);
+
   const fed = FED[status] || FED.single;
-  const fwtAnual = impuestoPorTramos(Math.max(0, anual - fed.sd), fed.b);
+  const sd = els.dostrab.checked ? fed.sd / 2 : fed.sd;
+  const fwtAnual = Math.max(0, impuestoPorTramos(Math.max(0, baseFed - sd), fed.b) - creditoDep);
   const fwt = r2(fwtAnual / periods) + num(els.extra, 0);
 
-  const ss = r2(Math.min(anual, TOPE_SS) * 0.062 / periods);
+  const ss = r2(Math.min(baseFica, TOPE_SS) * 0.062 / periods);
   const umbralMed = status === 'mfj' ? 250000 : 200000;
-  const med = r2((anual * 0.0145 + Math.max(0, anual - umbralMed) * 0.009) / periods);
+  const med = r2((baseFica * 0.0145 + Math.max(0, baseFica - umbralMed) * 0.009) / periods);
 
-  const st = r2(impuestoEstatal(anual, els.state.value || 'FL', status) / periods);
+  const st = r2(impuestoEstatal(baseFica, els.state.value || 'FL', status) / periods);
 
-  const net = r2(gross - fwt - ss - med - st);
-  const totDesc = fwt + ss + med + st;
+  const net = r2(gross - fwt - ss - med - st - pre - k401);
+  const totDesc = fwt + ss + med + st + pre + k401;
+  $('rowPre').hidden = pre <= 0;
+  if (pre > 0) $('vPre').textContent = '−' + fmt(pre);
+  $('row401').hidden = k401 <= 0;
+  if (k401 > 0) $('v401').textContent = '−' + fmt(k401);
   $('pctTotal').textContent = (gross > 0 ? (totDesc / gross * 100) : 0).toFixed(2) + ' %';
   $('lblFwt').textContent = gross > 0 ? '(≈' + (fwt / gross * 100).toFixed(1) + ' %)' : '';
   const stInfo = STATES[els.state.value || 'FL'];
@@ -455,24 +496,26 @@ function calc(){
   const w = v => gross > 0 ? (v / gross * 100) + '%' : '0%';
   $('segNet').style.width = w(net); $('segFwt').style.width = w(fwt);
   $('segSs').style.width = w(ss); $('segMed').style.width = w(med); $('segSt').style.width = w(st);
+  $('segPre').style.width = w(pre); $('seg401').style.width = w(k401);
   const max = parseFloat(els.range.max) || 80;
   els.range.style.setProperty('--p', Math.min(100, hours / max * 100) + '%');
   const netEl = $('vNet');
   if (fmt(net) !== netEl.textContent) { netEl.classList.remove('pulso'); void netEl.offsetWidth; netEl.classList.add('pulso'); }
   animar({ gross, fwt, ss, med, st, net, perHour: horasCheque > 0 ? r2(net / horasCheque) : 0, year: r2(net * periods) });
-  try { localStorage.setItem('sueldoMadruga', JSON.stringify({ rate: els.rate.value, hours: els.hours.value, freq: els.freq.value, status: els.status.value, state: els.state.value, ot: els.ot.value, extra: els.extra.value, w1: els.w1.value, w2: els.w2.value, w3: els.w3.value, w4: els.w4.value, w5: els.w5.value })); } catch(e){}
+  try { localStorage.setItem('sueldoMadruga', JSON.stringify({ rate: els.rate.value, hours: els.hours.value, freq: els.freq.value, status: els.status.value, state: els.state.value, ot: els.ot.value, extra: els.extra.value, hijos: els.hijos.value, dep: els.dep.value, pre: els.pre.value, k401: els.k401.value, dostrab: els.dostrab.checked ? '1' : '', w1: els.w1.value, w2: els.w2.value, w3: els.w3.value, w4: els.w4.value, w5: els.w5.value })); } catch(e){}
 }
 
 els.rate.addEventListener('input', calc);
 els.hours.addEventListener('input', () => { els.range.value = els.hours.value; calc(); });
 els.range.addEventListener('input', () => { els.hours.value = els.range.value; calc(); });
-[els.freq, els.status, els.state, els.ot, els.extra, els.w1, els.w2, els.w3, els.w4, els.w5].forEach(e => e.addEventListener('input', calc));
+[els.freq, els.status, els.state, els.ot, els.extra, els.hijos, els.dep, els.pre, els.k401, els.w1, els.w2, els.w3, els.w4, els.w5].forEach(e => e.addEventListener('input', calc));
 els.extra.addEventListener('input', calc);
+els.dostrab.addEventListener('change', calc);
 
 llenarEstados();
 try {
   const saved = JSON.parse(localStorage.getItem('sueldoMadruga') || 'null');
-  if (saved) { for (const k in saved) if (els[k]) els[k].value = saved[k]; els.range.value = els.hours.value; }
+  if (saved) { for (const k in saved) { if (!els[k]) continue; if (k === 'dostrab') els.dostrab.checked = saved[k] === '1'; else els[k].value = saved[k]; } els.range.value = els.hours.value; }
 } catch(e){}
 
 function setLang(l){
