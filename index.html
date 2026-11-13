@@ -248,7 +248,7 @@
     </div>
     <div class="item"><i class="dot d-net" style="margin-top:5px"></i><div>
       <h3 data-es="⏱️ Horas extra" data-en="⏱️ Overtime">⏱️ Horas extra</h3>
-      <p data-es="Por ley federal, las horas que pasan de 40 en una semana se pagan a tiempo y medio (1.5 veces tu tarifa) en la mayoría de los trabajos por hora. Hay excepciones: el trabajo agrícola, por ejemplo, está exento de esa regla federal y paga todas las horas a la misma tarifa. Por eso la calculadora tiene un selector de horas extra: elige cómo las pagan en tu empleo." data-en="Under federal law, hours over 40 in a week are paid at time and a half (1.5 times your rate) in most hourly jobs. There are exceptions: farm work, for example, is exempt from that federal rule and pays every hour at the same rate. That's why the calculator has an overtime selector: choose how your job pays them.">Por ley federal, las horas que pasan de 40 en una semana se pagan a tiempo y medio (1.5 veces tu tarifa) en la mayoría de los trabajos por hora. Hay excepciones: el trabajo agrícola, por ejemplo, está exento de esa regla federal y paga todas las horas a la misma tarifa. Por eso la calculadora tiene un selector de horas extra: elige cómo las pagan en tu empleo.</p>
+      <p data-es="Por ley federal, las horas que pasan de 40 en una semana se pagan a tiempo y medio (1.5 veces tu tarifa) en la mayoría de los trabajos por hora. Hay excepciones: el trabajo agrícola, por ejemplo, está exento de esa regla federal y paga todas las horas a la misma tarifa. Por eso la calculadora tiene un selector de horas extra: elige cómo las pagan en tu empleo. Y ten en cuenta que las horas extra se cuentan semana a semana: una semana floja no compensa una fuerte." data-en="Under federal law, hours over 40 in a week are paid at time and a half (1.5 times your rate) in most hourly jobs. There are exceptions: farm work, for example, is exempt from that federal rule and pays every hour at the same rate. That's why the calculator has an overtime selector: choose how your job pays them. And note that overtime is counted week by week: a slow week does not offset a strong one.">Por ley federal, las horas que pasan de 40 en una semana se pagan a tiempo y medio (1.5 veces tu tarifa) en la mayoría de los trabajos por hora. Hay excepciones: el trabajo agrícola, por ejemplo, está exento de esa regla federal y paga todas las horas a la misma tarifa. Por eso la calculadora tiene un selector de horas extra: elige cómo las pagan en tu empleo. Y ten en cuenta que las horas extra se cuentan semana a semana: una semana floja no compensa una fuerte.</p>
     </div></div>
   </section>
 
@@ -256,6 +256,18 @@
     <summary data-es="⚙️ Retención extra (opcional)" data-en="⚙️ Extra withholding (optional)">⚙️ Retención extra (opcional)</summary>
     <div class="field"><span class="sym">$</span><input id="extra" type="number" inputmode="decimal" min="0" step="1" value="0"><span class="unit" data-es="por cheque" data-en="per check">por cheque</span></div>
     <p data-es="Es el extra que algunas personas piden en su formulario W-4 para que les quiten un poco más en cada cheque. Déjalo en 0 si no es tu caso. El Seguro Social y Medicare son fijos por ley (6.2 % y 1.45 %) y no se editan." data-en="This is the extra amount some people request on their W-4 form to have a little more taken out of each check. Leave it at 0 if that's not you. Social Security and Medicare are fixed by law (6.2% and 1.45%) and can't be edited.">Es el extra que algunas personas piden en su formulario W-4 para que les quiten un poco más en cada cheque. Déjalo en 0 si no es tu caso. El Seguro Social y Medicare son fijos por ley (6.2 % y 1.45 %) y no se editan.</p>
+  </details>
+
+  <details>
+    <summary data-es="📅 Detalle por semanas (opcional)" data-en="📅 Week-by-week detail (optional)">📅 Detalle por semanas (opcional)</summary>
+    <p data-es="Si tus semanas no son todas iguales, escribe las horas de cada semana de un mes típico (deja vacías las que no apliquen). Cada semana se calcula por separado, como hace la nómina real: las horas extra se cuentan semana a semana, y una semana floja no compensa una fuerte. Si rellenas esto, manda sobre el campo «Horas por semana»." data-en="If your weeks are not all the same, enter the hours of each week of a typical month (leave blank the ones that don't apply). Each week is calculated separately, the way real payroll does it: overtime is counted week by week, and a slow week does not offset a strong one. If you fill this in, it takes precedence over the “Hours per week” field.">Si tus semanas no son todas iguales, escribe las horas de cada semana de un mes típico (deja vacías las que no apliquen). Cada semana se calcula por separado, como hace la nómina real: las horas extra se cuentan semana a semana, y una semana floja no compensa una fuerte. Si rellenas esto, manda sobre el campo «Horas por semana».</p>
+    <div class="inputs">
+      <div><label for="w1" data-es="Semana 1" data-en="Week 1">Semana 1</label><div class="field"><input id="w1" type="number" inputmode="decimal" min="0" step="0.25" placeholder="—"><span class="unit" data-es="horas" data-en="hours">horas</span></div></div>
+      <div><label for="w2" data-es="Semana 2" data-en="Week 2">Semana 2</label><div class="field"><input id="w2" type="number" inputmode="decimal" min="0" step="0.25" placeholder="—"><span class="unit" data-es="horas" data-en="hours">horas</span></div></div>
+      <div><label for="w3" data-es="Semana 3" data-en="Week 3">Semana 3</label><div class="field"><input id="w3" type="number" inputmode="decimal" min="0" step="0.25" placeholder="—"><span class="unit" data-es="horas" data-en="hours">horas</span></div></div>
+      <div><label for="w4" data-es="Semana 4" data-en="Week 4">Semana 4</label><div class="field"><input id="w4" type="number" inputmode="decimal" min="0" step="0.25" placeholder="—"><span class="unit" data-es="horas" data-en="hours">horas</span></div></div>
+      <div><label for="w5" data-es="Semana 5" data-en="Week 5">Semana 5</label><div class="field"><input id="w5" type="number" inputmode="decimal" min="0" step="0.25" placeholder="—"><span class="unit" data-es="horas" data-en="hours">horas</span></div></div>
+    </div>
   </details>
 
   <p class="note" data-es="Estimación hecha con las tablas federales oficiales de 2026 (IRS) y las tasas estatales de 2025, redondeadas. Tu retención real puede variar un poco según tu W-4, tus horas extra y tus beneficios. Esto es una guía para entender tu cheque, no asesoría fiscal." data-en="An estimate built with the official 2026 federal tables (IRS) and 2025 state rates, rounded. Your real withholding can vary a bit with your W-4, overtime and benefits. This is a guide to understand your paycheck, not tax advice.">Estimación hecha con las tablas federales oficiales de 2026 (IRS) y las tasas estatales de 2025, redondeadas. Tu retención real puede variar un poco según tu W-4, tus horas extra y tus beneficios. Esto es una guía para entender tu cheque, no asesoría fiscal.</p>
@@ -266,7 +278,8 @@
 <script>
 const $ = id => document.getElementById(id);
 const els = { rate:$('rate'), hours:$('hours'), range:$('hoursRange'),
-  freq:$('freq'), status:$('status'), state:$('state'), ot:$('ot'), extra:$('extra') };
+  freq:$('freq'), status:$('status'), state:$('state'), ot:$('ot'), extra:$('extra'),
+  w1:$('w1'), w2:$('w2'), w3:$('w3'), w4:$('w4'), w5:$('w5') };
 const r2 = x => Math.round(x * 100) / 100;
 const fmt = x => x.toLocaleString('en-US', { style:'currency', currency:'USD' });
 const num = (el, d) => { const v = parseFloat(el.value); return isNaN(v) || v < 0 ? d : v; };
@@ -402,9 +415,21 @@ function calc(){
   // Horas extra según el selector: 1.5× (ley federal general), misma tarifa
   // (p. ej. trabajo agrícola, exento de la regla federal) o 2× (doble tiempo).
   const multExtra = parseFloat(els.ot.value) || 1.5;
-  const pagoSemanal = rate * Math.min(hours, 40) + rate * multExtra * Math.max(0, hours - 40);
-  const horasCheque = hours * 52 / periods;
-  const gross = r2(pagoSemanal * 52 / periods);
+  const pagoDeSemana = h => rate * Math.min(h, 40) + rate * multExtra * Math.max(0, h - 40);
+  // Detalle por semanas: si el usuario repartió sus horas en semanas distintas,
+  // cada semana se paga por separado, como la nómina real: las horas extra se
+  // cuentan semana a semana y una semana floja no compensa una fuerte.
+  const semanas = [els.w1, els.w2, els.w3, els.w4, els.w5].map(e => num(e, 0)).filter(h => h > 0);
+  let gross, horasCheque;
+  if (semanas.length) {
+    const pagoMes = semanas.reduce((s, h) => s + pagoDeSemana(h), 0);
+    const horasMes = semanas.reduce((s, h) => s + h, 0);
+    gross = r2(pagoMes * 12 / periods);
+    horasCheque = horasMes * 12 / periods;
+  } else {
+    gross = r2(pagoDeSemana(hours) * 52 / periods);
+    horasCheque = hours * 52 / periods;
+  }
   const anual = gross * periods;
 
   const fed = FED[status] || FED.single;
@@ -435,13 +460,13 @@ function calc(){
   const netEl = $('vNet');
   if (fmt(net) !== netEl.textContent) { netEl.classList.remove('pulso'); void netEl.offsetWidth; netEl.classList.add('pulso'); }
   animar({ gross, fwt, ss, med, st, net, perHour: horasCheque > 0 ? r2(net / horasCheque) : 0, year: r2(net * periods) });
-  try { localStorage.setItem('sueldoMadruga', JSON.stringify({ rate: els.rate.value, hours: els.hours.value, freq: els.freq.value, status: els.status.value, state: els.state.value, ot: els.ot.value, extra: els.extra.value })); } catch(e){}
+  try { localStorage.setItem('sueldoMadruga', JSON.stringify({ rate: els.rate.value, hours: els.hours.value, freq: els.freq.value, status: els.status.value, state: els.state.value, ot: els.ot.value, extra: els.extra.value, w1: els.w1.value, w2: els.w2.value, w3: els.w3.value, w4: els.w4.value, w5: els.w5.value })); } catch(e){}
 }
 
 els.rate.addEventListener('input', calc);
 els.hours.addEventListener('input', () => { els.range.value = els.hours.value; calc(); });
 els.range.addEventListener('input', () => { els.hours.value = els.range.value; calc(); });
-[els.freq, els.status, els.state, els.ot, els.extra].forEach(e => e.addEventListener('input', calc));
+[els.freq, els.status, els.state, els.ot, els.extra, els.w1, els.w2, els.w3, els.w4, els.w5].forEach(e => e.addEventListener('input', calc));
 els.extra.addEventListener('input', calc);
 
 llenarEstados();
