@@ -1,4 +1,4 @@
-# Sueldo Madruga 💵
+# ¿Cuánto me toca? 💵
 
 **Calculadora de sueldo neto / Net pay calculator**
 
