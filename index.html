@@ -4,14 +4,22 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>¿Cuánto me toca? — Calculadora de sueldo neto</title>
-<meta name="description" content="Calcula tu sueldo neto: escribe cuánto ganas por hora y las horas trabajadas, y mira cuánto te llega al banco después de los descuentos.">
+<meta name="description" content="Calculadora de sueldo neto para EE. UU.: escribe cuánto ganas por hora y tus horas, elige tu estado, y mira cuánto te quitan de impuestos y cuánto te llega al banco.">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#070914">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="¿Cuánto me toca?">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root{
+    color-scheme: dark;
     --bg:#070914; --card:#0d1526; --card2:#111c33; --line:#1e2c47;
     --txt:#eef4ff; --mut:#93a5c4; --teal:#2dd4bf; --teal2:#5eead4;
-    --fwt:#fb7a8c; --ss:#a5b4fc; --med:#fbbf24;
+    --fwt:#fb7a8c; --ss:#a5b4fc; --med:#fbbf24; --st:#c084fc;
   }
   *{margin:0;padding:0;box-sizing:border-box;min-width:0}
   html,body{overflow-x:clip}
@@ -22,7 +30,6 @@
     background-image:radial-gradient(900px 500px at 15% -10%, rgba(45,212,191,.14), transparent 60%),
                      radial-gradient(800px 500px at 110% 10%, rgba(94,234,212,.08), transparent 55%);
   }
-  /* Burbujas de fondo 🫧 */
   .bubbles{position:fixed; inset:0; overflow:hidden; pointer-events:none; z-index:0}
   .bubbles i{position:absolute; bottom:-90px; border-radius:50%;
     background:radial-gradient(circle at 32% 30%, rgba(94,234,212,.35), rgba(45,212,191,.10) 55%, rgba(45,212,191,.03) 72%);
@@ -54,22 +61,37 @@
   .lang button:active{transform:scale(.93)}
   main{width:100%; max-width:560px; display:flex; flex-direction:column; gap:16px}
   main>*{animation:entra .6s cubic-bezier(.22,1,.36,1) both}
-  main>*:nth-child(1){animation-delay:.06s}
-  main>*:nth-child(2){animation-delay:.14s}
-  main>*:nth-child(3){animation-delay:.22s}
-  main>*:nth-child(4){animation-delay:.30s}
-  main>*:nth-child(5){animation-delay:.38s}
+  main>*:nth-child(1){animation-delay:.05s}
+  main>*:nth-child(2){animation-delay:.12s}
+  main>*:nth-child(3){animation-delay:.19s}
+  main>*:nth-child(4){animation-delay:.26s}
+  main>*:nth-child(5){animation-delay:.33s}
+  main>*:nth-child(6){animation-delay:.40s}
+  main>*:nth-child(7){animation-delay:.47s}
   @keyframes entra{from{opacity:0; transform:translateY(16px)} to{opacity:1; transform:translateY(0)}}
   .card{background:linear-gradient(180deg, var(--card2), var(--card)); border:1px solid var(--line); border-radius:24px; padding:22px; box-shadow:0 18px 40px rgba(0,0,0,.35)}
+  .install{display:flex; align-items:center; justify-content:center; gap:10px; width:100%;
+    background:linear-gradient(90deg, var(--teal), var(--teal2)); color:#052e28;
+    border:0; border-radius:18px; padding:15px 18px; font:700 16px 'Inter',sans-serif; cursor:pointer;
+    box-shadow:0 10px 26px rgba(45,212,191,.30); transition:transform .2s, box-shadow .2s}
+  .install:active{transform:scale(.97)}
+  .install .ic{font-size:20px}
+  .install-help{background:rgba(45,212,191,.07); border:1px solid rgba(45,212,191,.28); border-radius:16px; padding:14px 16px; color:#cfe8e3; font-size:14px; line-height:1.6}
+  .install-help b{color:var(--teal2)}
   .inputs{display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:14px}
+  .inputs3{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:14px; margin-top:14px}
+  @media (max-width:560px){ .inputs3{grid-template-columns:minmax(0,1fr)} }
   @media (max-width:480px){ .inputs{grid-template-columns:minmax(0,1fr)} }
   label{display:block; font-size:13px; font-weight:600; color:var(--mut); margin-bottom:8px; text-transform:uppercase; letter-spacing:.6px}
-  .field{display:flex; align-items:center; gap:6px; width:100%; background:#0a1120; border:1px solid var(--line); border-radius:14px; padding:10px 14px; transition:border-color .25s, box-shadow .25s}
+  .field{display:flex; align-items:center; gap:6px; width:100%; background:#0a1120; border:1px solid var(--line); border-radius:14px; padding:10px 14px; transition:border-color .25s, box-shadow .25s; position:relative}
   .field:focus-within{border-color:var(--teal); box-shadow:0 0 0 3px rgba(45,212,191,.18), 0 0 18px rgba(45,212,191,.12)}
   .field .sym{color:var(--teal); font-weight:700; font-size:18px; flex:none}
   .field input{flex:1 1 0%; width:100%; background:transparent; border:0; outline:0; color:var(--txt); font:700 22px 'Inter',sans-serif; appearance:textfield; -moz-appearance:textfield}
   .field input::-webkit-outer-spin-button,.field input::-webkit-inner-spin-button{-webkit-appearance:none; margin:0}
   .field .unit{color:var(--mut); font-size:13px; font-weight:600; flex:none}
+  .field select{flex:1 1 0%; width:100%; background:transparent; border:0; outline:0; color:var(--txt); font:600 15.5px 'Inter',sans-serif; appearance:none; -webkit-appearance:none; padding-right:18px; cursor:pointer}
+  .field select option{background:#0d1526; color:var(--txt)}
+  .field .chev{position:absolute; right:12px; color:var(--mut); pointer-events:none; font-size:12px}
   input[type=range]{-webkit-appearance:none; appearance:none; width:100%; display:block; margin-top:14px; height:10px; border-radius:999px; cursor:pointer;
     background:linear-gradient(90deg, var(--teal) var(--p,50%), #1c2a45 var(--p,50%)); outline:0}
   input[type=range]::-webkit-slider-thumb{-webkit-appearance:none; width:24px; height:24px; border-radius:50%; background:#eafffb; border:3px solid var(--teal);
@@ -86,12 +108,12 @@
   @keyframes brillo{0%,55%{transform:translateX(-120%)} 90%,100%{transform:translateX(120%)}}
   .bar i{display:block; height:100%; transition:width .6s cubic-bezier(.22,1,.36,1)}
   .bar .b-net{background:linear-gradient(90deg, var(--teal), var(--teal2))}
-  .bar .b-fwt{background:var(--fwt)} .bar .b-ss{background:var(--ss)} .bar .b-med{background:var(--med)}
+  .bar .b-fwt{background:var(--fwt)} .bar .b-ss{background:var(--ss)} .bar .b-med{background:var(--med)} .bar .b-st{background:var(--st)}
   .row{display:flex; align-items:center; justify-content:space-between; gap:8px; padding:13px 2px; border-bottom:1px solid rgba(30,44,71,.7); font-size:16px}
   .row:last-of-type{border-bottom:0}
   .row .name{display:flex; align-items:center; gap:10px; color:#dbe6fa}
   .dot{width:12px; height:12px; border-radius:4px; flex:none}
-  .d-fwt{background:var(--fwt)} .d-ss{background:var(--ss)} .d-med{background:var(--med)} .d-net{background:var(--teal)}
+  .d-fwt{background:var(--fwt)} .d-ss{background:var(--ss)} .d-med{background:var(--med)} .d-net{background:var(--teal)} .d-st{background:var(--st)}
   .row .val{font-weight:600; white-space:nowrap; flex:none}
   .row.net{font-size:19px; font-weight:800}
   .row.net .val{color:var(--teal2); text-shadow:0 0 18px rgba(45,212,191,.35)}
@@ -102,11 +124,16 @@
   .stat .k{font-size:12px; font-weight:600; color:var(--mut); text-transform:uppercase; letter-spacing:.6px; margin-bottom:6px}
   .stat .v{font:700 24px 'Fredoka',sans-serif; color:var(--teal2)}
   .stat .s{font-size:12px; color:var(--mut); margin-top:3px}
+  .edu h2{font-family:'Fredoka',sans-serif; font-size:22px; font-weight:600; margin-bottom:4px}
+  .edu .intro{color:var(--mut); font-size:14.5px; line-height:1.55; margin-bottom:14px}
+  .edu .item{display:flex; gap:12px; padding:13px 0; border-top:1px solid rgba(30,44,71,.7)}
+  .edu .item h3{font-size:15.5px; font-weight:700; margin-bottom:3px}
+  .edu .item p{color:#b7c6e2; font-size:14px; line-height:1.6}
   details{background:var(--card); border:1px solid var(--line); border-radius:18px; padding:14px 18px}
   details summary{cursor:pointer; font-weight:600; color:var(--mut); font-size:14px}
-  .rates{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; margin-top:14px}
-  @media (max-width:480px){ .rates{grid-template-columns:minmax(0,1fr)} }
-  .rates .field input{font-size:17px}
+  details .field{margin-top:12px}
+  details .field input{font-size:17px}
+  details p{color:var(--mut); font-size:13px; line-height:1.55; margin-top:10px}
   .note{background:rgba(45,212,191,.07); border:1px solid rgba(45,212,191,.22); border-radius:16px; padding:14px 16px; color:#b9cdc9; font-size:14px; line-height:1.55}
   footer{margin-top:22px; color:var(--mut); font-size:13px; text-align:center}
   footer b{color:var(--teal2)}
@@ -121,12 +148,17 @@
 <header>
   <div class="brand">
     <h1>¿Cuánto <span>me toca?</span></h1>
-    <p data-es="Tu sueldo neto, claro como el agua: cuánto te quitan y cuánto te llega al banco." data-en="Your net pay, plain and clear: what they take out and what hits your bank.">Tu sueldo neto, claro como el agua: cuánto te quitan y cuánto te llega al banco.</p>
+    <p data-es="Tu sueldo neto, claro como el agua: cuánto te quitan, por qué, y cuánto te llega al banco." data-en="Your net pay, plain and clear: what they take out, why, and what hits your bank.">Tu sueldo neto, claro como el agua: cuánto te quitan, por qué, y cuánto te llega al banco.</p>
   </div>
   <div class="lang"><button id="btnEs" class="on">ES</button><button id="btnEn">EN</button></div>
 </header>
 
 <main>
+  <button class="install" id="btnInstall"><span class="ic">📲</span><span data-es="Instalar la app en tu móvil" data-en="Install the app on your phone">Instalar la app en tu móvil</span></button>
+  <div class="install-help" id="installHelp" hidden>
+    <p data-es="En Android (Chrome): si no aparece la ventana de instalación, abre el menú ⋮ y toca «Instalar app» o «Añadir a pantalla de inicio». En iPhone (Safari): toca Compartir ⬆ y luego «Añadir a pantalla de inicio». Quedará con su icono, como una app más." data-en="On Android (Chrome): if the install window doesn't appear, open the ⋮ menu and tap “Install app” or “Add to Home screen”. On iPhone (Safari): tap Share ⬆ and then “Add to Home Screen”. It will sit on your home screen with its own icon, like any other app.">En <b>Android</b> (Chrome): si no aparece la ventana de instalación, abre el menú <b>⋮</b> y toca «Instalar app» o «Añadir a pantalla de inicio». En <b>iPhone</b> (Safari): toca Compartir ⬆ y luego «Añadir a pantalla de inicio». Quedará con su icono, como una app más.</p>
+  </div>
+
   <section class="card">
     <div class="inputs">
       <div>
@@ -139,36 +171,82 @@
         <input id="hoursRange" type="range" min="0" max="80" step="0.25" value="40">
       </div>
     </div>
+    <div class="inputs3">
+      <div>
+        <label for="freq" data-es="¿Cada cuánto te pagan?" data-en="How often are you paid?">¿Cada cuánto te pagan?</label>
+        <div class="field"><select id="freq">
+          <option value="52" selected data-es="Semanal" data-en="Weekly">Semanal</option>
+          <option value="26" data-es="Cada 2 semanas" data-en="Every 2 weeks">Cada 2 semanas</option>
+          <option value="24" data-es="Dos veces al mes" data-en="Twice a month">Dos veces al mes</option>
+          <option value="12" data-es="Mensual" data-en="Monthly">Mensual</option>
+        </select><span class="chev">▾</span></div>
+      </div>
+      <div>
+        <label for="status" data-es="Estado civil (impuestos)" data-en="Filing status (taxes)">Estado civil (impuestos)</label>
+        <div class="field"><select id="status">
+          <option value="single" selected data-es="Soltero/a" data-en="Single">Soltero/a</option>
+          <option value="mfj" data-es="Casado/a (conjunta)" data-en="Married (joint)">Casado/a (conjunta)</option>
+          <option value="hoh" data-es="Cabeza de familia" data-en="Head of household">Cabeza de familia</option>
+        </select><span class="chev">▾</span></div>
+      </div>
+      <div>
+        <label for="state" data-es="¿En qué estado vives?" data-en="Which state do you live in?">¿En qué estado vives?</label>
+        <div class="field"><select id="state"></select><span class="chev">▾</span></div>
+      </div>
+    </div>
   </section>
 
   <section class="card res">
     <h2 data-es="Tu sueldo" data-en="Your pay">Tu sueldo</h2>
     <p class="lead"><span data-es="Te descuentan el" data-en="They take out">Te descuentan el</span> <b id="pctTotal">13.87&nbsp;%</b> <span data-es="de tu sueldo bruto." data-en="of your gross pay.">de tu sueldo bruto.</span></p>
     <div class="bar">
-      <i class="b-net" id="segNet"></i><i class="b-fwt" id="segFwt"></i><i class="b-ss" id="segSs"></i><i class="b-med" id="segMed"></i>
+      <i class="b-net" id="segNet"></i><i class="b-fwt" id="segFwt"></i><i class="b-ss" id="segSs"></i><i class="b-med" id="segMed"></i><i class="b-st" id="segSt"></i>
     </div>
     <div class="row"><span class="name" data-es="Sueldo bruto" data-en="Gross pay">Sueldo bruto</span><span class="val" id="vGross">—</span></div>
-    <div class="row"><span class="name"><i class="dot d-fwt"></i><span data-es="Retención federal (FWT)" data-en="Federal withholding (FWT)">Retención federal (FWT)</span></span><span class="val" id="vFwt">—</span></div>
-    <div class="row"><span class="name"><i class="dot d-ss"></i><span data-es="Seguro Social" data-en="Social Security">Seguro Social</span>&nbsp;<span style="color:var(--mut)" id="lblSs">(6.2 %)</span></span><span class="val" id="vSs">—</span></div>
-    <div class="row"><span class="name"><i class="dot d-med"></i>Medicare&nbsp;<span style="color:var(--mut)" id="lblMed">(1.45 %)</span></span><span class="val" id="vMed">—</span></div>
+    <div class="row"><span class="name"><i class="dot d-fwt"></i><span data-es="Impuesto federal" data-en="Federal tax">Impuesto federal</span>&nbsp;<span style="color:var(--mut)" id="lblFwt"></span></span><span class="val" id="vFwt">—</span></div>
+    <div class="row"><span class="name"><i class="dot d-ss"></i><span data-es="Seguro Social" data-en="Social Security">Seguro Social</span>&nbsp;<span style="color:var(--mut)">(6.2 %)</span></span><span class="val" id="vSs">—</span></div>
+    <div class="row"><span class="name"><i class="dot d-med"></i>Medicare&nbsp;<span style="color:var(--mut)">(1.45 %)</span></span><span class="val" id="vMed">—</span></div>
+    <div class="row"><span class="name"><i class="dot d-st"></i><span data-es="Impuesto estatal" data-en="State tax">Impuesto estatal</span>&nbsp;<span style="color:var(--mut)" id="lblState"></span></span><span class="val" id="vState">—</span></div>
     <div class="row net"><span class="name"><i class="dot d-net"></i><span data-es="Te llega al banco (neto)" data-en="You take home (net)">Te llega al banco (neto)</span></span><span class="val" id="vNet">—</span></div>
   </section>
 
   <section class="stats">
     <div class="stat"><div class="k" data-es="Neto por hora" data-en="Net per hour">Neto por hora</div><div class="v" id="vPerHour">—</div><div class="s" data-es="lo que de verdad ganas por cada hora" data-en="what you really earn for each hour">lo que de verdad ganas por cada hora</div></div>
-    <div class="stat"><div class="k" data-es="Al año (estimado)" data-en="Per year (estimate)">Al año (estimado)</div><div class="v" id="vYear">—</div><div class="s" data-es="si cada pago fuera igual (×52)" data-en="if every check were the same (×52)">si cada pago fuera igual (×52)</div></div>
+    <div class="stat"><div class="k" data-es="Al año (estimado)" data-en="Per year (estimate)">Al año (estimado)</div><div class="v" id="vYear">—</div><div class="s" data-es="si cada pago fuera igual todo el año" data-en="if every check were the same all year">si cada pago fuera igual todo el año</div></div>
+  </section>
+
+  <section class="card edu">
+    <h2 data-es="Entiende tu cheque 🧾" data-en="Understand your paycheck 🧾">Entiende tu cheque 🧾</h2>
+    <p class="intro" data-es="La gente dice «me quitan los taxes» sin saber adónde va cada dólar. No debería ser así: esto es lo que te quitan y por qué." data-en="People say “they take my taxes” without knowing where each dollar goes. It shouldn't be that way: this is what they take, and why.">La gente dice «me quitan los taxes» sin saber adónde va cada dólar. No debería ser así: esto es lo que te quitan y por qué.</p>
+    <div class="item"><i class="dot d-fwt" style="margin-top:5px"></i><div>
+      <h3 data-es="Impuesto federal — va por tramos" data-en="Federal tax — it works in brackets">Impuesto federal — va por tramos</h3>
+      <p data-es="No es un porcentaje fijo. Primero, una parte de tu sueldo no paga nada: la deducción estándar (en 2026, $16,100 al año si eres soltero). Lo que queda paga por escalones: 10 %, 12 %, 22 %… cada tramo solo sobre los dólares de ese escalón. Por eso a dos compañeros con el mismo sueldo les pueden quitar distinto: depende de su formulario W-4, de si son casados, de si tienen hijos." data-en="It's not a flat percentage. First, part of your pay owes nothing: the standard deduction ($16,100 a year if you're single, in 2026). What's left is taxed in steps — 10%, 12%, 22%… each rate only on the dollars inside that step. That's why two coworkers with the same pay can have different withholding: it depends on their W-4 form, whether they're married, whether they have kids.">No es un porcentaje fijo. Primero, una parte de tu sueldo no paga nada: la deducción estándar (en 2026, $16,100 al año si eres soltero). Lo que queda paga por escalones: 10 %, 12 %, 22 %… cada tramo solo sobre los dólares de ese escalón. Por eso a dos compañeros con el mismo sueldo les pueden quitar distinto: depende de su formulario W-4, de si son casados, de si tienen hijos.</p>
+    </div></div>
+    <div class="item"><i class="dot d-ss" style="margin-top:5px"></i><div>
+      <h3 data-es="Seguro Social — 6.2 %" data-en="Social Security — 6.2%">Seguro Social — 6.2 %</h3>
+      <p data-es="Es tu jubilación y tu protección si un día no puedes trabajar. Lo paga todo empleado en EE. UU., y tu empleador pone otro 6.2 % igual que tú (aunque no lo veas en tu cheque). En 2026 se cobra solo sobre los primeros $184,500 que ganes en el año." data-en="It's your retirement and your protection if one day you can't work. Every employee in the U.S. pays it, and your employer matches another 6.2% on top (you just don't see it on your check). In 2026 it's charged only on the first $184,500 you earn in the year.">Es tu jubilación y tu protección si un día no puedes trabajar. Lo paga todo empleado en EE. UU., y tu empleador pone otro 6.2 % igual que tú (aunque no lo veas en tu cheque). En 2026 se cobra solo sobre los primeros $184,500 que ganes en el año.</p>
+    </div></div>
+    <div class="item"><i class="dot d-med" style="margin-top:5px"></i><div>
+      <h3>Medicare — 1.45 %</h3>
+      <p data-es="Paga el seguro de salud para cuando cumplas 65 años. No tiene tope: se cobra sobre todo lo que ganas. Si ganas más de $200,000 al año, se suma un 0.9 % extra sobre lo que pase de ahí." data-en="It pays for health coverage when you turn 65. It has no cap: it's charged on everything you earn. If you make over $200,000 a year, an extra 0.9% applies to the amount above that.">Paga el seguro de salud para cuando cumplas 65 años. No tiene tope: se cobra sobre todo lo que ganas. Si ganas más de $200,000 al año, se suma un 0.9 % extra sobre lo que pase de ahí.</p>
+    </div></div>
+    <div class="item"><i class="dot d-st" style="margin-top:5px"></i><div>
+      <h3 data-es="Impuesto estatal — depende de dónde vivas" data-en="State tax — it depends on where you live">Impuesto estatal — depende de dónde vivas</h3>
+      <p data-es="Nueve estados no cobran impuesto estatal sobre el sueldo: Alaska, Florida, Nevada, New Hampshire, Dakota del Sur, Tennessee, Texas, Washington y Wyoming. Los demás cobran un porcentaje fijo o también van por tramos. Por eso esta calculadora te pide tu estado." data-en="Nine states charge no state income tax on wages: Alaska, Florida, Nevada, New Hampshire, South Dakota, Tennessee, Texas, Washington and Wyoming. The rest charge a flat rate or use brackets too. That's why this calculator asks for your state.">Nueve estados no cobran impuesto estatal sobre el sueldo: Alaska, Florida, Nevada, New Hampshire, Dakota del Sur, Tennessee, Texas, Washington y Wyoming. Los demás cobran un porcentaje fijo o también van por tramos. Por eso esta calculadora te pide tu estado.</p>
+    </div></div>
+    <div class="item"><i class="dot d-net" style="margin-top:5px"></i><div>
+      <h3 data-es="¿Tu cheque trae más descuentos?" data-en="Does your check show more deductions?">¿Tu cheque trae más descuentos?</h3>
+      <p data-es="Lo que no es impuesto son beneficios que elegiste: seguro médico, plan de jubilación 401(k), etc. Esos no son taxes y cambian en cada trabajo. Los tres o cuatro de arriba son los impuestos de verdad." data-en="Anything that isn't a tax is a benefit you chose: health insurance, a 401(k) retirement plan, and so on. Those aren't taxes and they differ at every job. The three or four above are the real taxes.">Lo que no es impuesto son beneficios que elegiste: seguro médico, plan de jubilación 401(k), etc. Esos no son taxes y cambian en cada trabajo. Los tres o cuatro de arriba son los impuestos de verdad.</p>
+    </div></div>
   </section>
 
   <details>
-    <summary data-es="⚙️ Ajustar los porcentajes que te quitan" data-en="⚙️ Adjust the deduction percentages">⚙️ Ajustar los porcentajes que te quitan</summary>
-    <div class="rates">
-      <div><label data-es="Federal %" data-en="Federal %">Federal %</label><div class="field"><input id="rFwt" type="number" inputmode="decimal" min="0" step="0.01" value="6.22"><span class="unit">%</span></div></div>
-      <div><label data-es="Seguro Social %" data-en="Social Security %">Seguro Social %</label><div class="field"><input id="rSs" type="number" inputmode="decimal" min="0" step="0.01" value="6.2"><span class="unit">%</span></div></div>
-      <div><label>Medicare %</label><div class="field"><input id="rMed" type="number" inputmode="decimal" min="0" step="0.01" value="1.45"><span class="unit">%</span></div></div>
-    </div>
+    <summary data-es="⚙️ Retención extra (opcional)" data-en="⚙️ Extra withholding (optional)">⚙️ Retención extra (opcional)</summary>
+    <div class="field"><span class="sym">$</span><input id="extra" type="number" inputmode="decimal" min="0" step="1" value="0"><span class="unit" data-es="por cheque" data-en="per check">por cheque</span></div>
+    <p data-es="Es el extra que algunas personas piden en su formulario W-4 para que les quiten un poco más en cada cheque. Déjalo en 0 si no es tu caso. El Seguro Social y Medicare son fijos por ley (6.2 % y 1.45 %) y no se editan." data-en="This is the extra amount some people request on their W-4 form to have a little more taken out of each check. Leave it at 0 if that's not you. Social Security and Medicare are fixed by law (6.2% and 1.45%) and can't be edited.">Es el extra que algunas personas piden en su formulario W-4 para que les quiten un poco más en cada cheque. Déjalo en 0 si no es tu caso. El Seguro Social y Medicare son fijos por ley (6.2 % y 1.45 %) y no se editan.</p>
   </details>
 
-  <p class="note" data-es="Seguro Social (6.2 %) y Medicare (1.45 %) son fijos por ley en EE. UU. La retención federal aquí es el promedio de un recibo real y puede variar un poco según tus horas y tu formulario W-4. Esto es una estimación para planificar, no un documento oficial." data-en="Social Security (6.2%) and Medicare (1.45%) are fixed by U.S. law. The federal withholding here is the average from a real pay stub and can vary a bit with your hours and your W-4 form. This is a planning estimate, not an official document.">Seguro Social (6.2 %) y Medicare (1.45 %) son fijos por ley en EE. UU. La retención federal aquí es el promedio de un recibo real y puede variar un poco según tus horas y tu formulario W-4. Esto es una estimación para planificar, no un documento oficial.</p>
+  <p class="note" data-es="Estimación hecha con las tablas federales oficiales de 2026 (IRS) y las tasas estatales de 2025, redondeadas. Tu retención real puede variar un poco según tu W-4, tus horas extra y tus beneficios. Esto es una guía para entender tu cheque, no asesoría fiscal." data-en="An estimate built with the official 2026 federal tables (IRS) and 2025 state rates, rounded. Your real withholding can vary a bit with your W-4, overtime and benefits. This is a guide to understand your paycheck, not tax advice.">Estimación hecha con las tablas federales oficiales de 2026 (IRS) y las tasas estatales de 2025, redondeadas. Tu retención real puede variar un poco según tu W-4, tus horas extra y tus beneficios. Esto es una guía para entender tu cheque, no asesoría fiscal.</p>
 </main>
 
 <footer><span data-es="Hecho por" data-en="Made by">Hecho por</span> <b>Fraudy Martinez Madruga</b></footer>
@@ -176,19 +254,117 @@
 <script>
 const $ = id => document.getElementById(id);
 const els = { rate:$('rate'), hours:$('hours'), range:$('hoursRange'),
-  rFwt:$('rFwt'), rSs:$('rSs'), rMed:$('rMed') };
+  freq:$('freq'), status:$('status'), state:$('state'), extra:$('extra') };
 const r2 = x => Math.round(x * 100) / 100;
 const fmt = x => x.toLocaleString('en-US', { style:'currency', currency:'USD' });
 const num = (el, d) => { const v = parseFloat(el.value); return isNaN(v) || v < 0 ? d : v; };
+let LANG = 'es';
 
-/* Conteo animado de las cifras */
-const mostrado = { gross:0, fwt:0, ss:0, med:0, net:0, perHour:0, year:0 };
+/* ---------- Tablas federales 2026 (IRS, Rev. Proc. 2025-32) ---------- */
+const FED = {
+  single: { sd: 16100, b: [[12400,.10],[50400,.12],[105700,.22],[201775,.24],[256225,.32],[640600,.35],[Infinity,.37]] },
+  mfj:    { sd: 32200, b: [[24800,.10],[100800,.12],[211400,.22],[403550,.24],[512450,.32],[768700,.35],[Infinity,.37]] },
+  hoh:    { sd: 24150, b: [[17700,.10],[67450,.12],[105700,.22],[201750,.24],[256200,.32],[640600,.35],[Infinity,.37]] }
+};
+const TOPE_SS = 184500; // tope salarial del Seguro Social 2026
+
+function impuestoPorTramos(base, tramos){
+  let tax = 0, prev = 0;
+  for (const [cap, r] of tramos){
+    if (base <= prev) break;
+    tax += (Math.min(base, cap) - prev) * r;
+    prev = cap;
+  }
+  return tax;
+}
+
+/* ---------- Estados: tasas 2025 aproximadas ----------
+   t:0 sin impuesto · t:1 % fijo (r %, tras deducir d) · t:2 tramos [tope, %] tras deducir d */
+const STATES = {
+  AL:{n:["Alabama","Alabama"],t:2,d:2500,b:[[500,2],[3000,4],[Infinity,5]]},
+  AK:{n:["Alaska","Alaska"],t:0},
+  AZ:{n:["Arizona","Arizona"],t:1,r:2.5,d:14600},
+  AR:{n:["Arkansas","Arkansas"],t:2,d:2340,b:[[4400,2],[8800,3],[Infinity,3.9]]},
+  CA:{n:["California","California"],t:2,d:5363,b:[[10412,1],[24684,2],[38959,4],[55023,6],[69786,8],[356642,9.3],[445771,10.3],[742953,11.3],[Infinity,12.3]]},
+  CO:{n:["Colorado","Colorado"],t:1,r:4.4,d:16100},
+  CT:{n:["Connecticut","Connecticut"],t:2,d:15000,b:[[10000,2],[20000,4.5],[50000,5.5],[100000,6],[200000,6.5],[250000,6.9],[Infinity,7]]},
+  DE:{n:["Delaware","Delaware"],t:2,d:3250,b:[[2000,0],[5000,2.2],[10000,3.9],[20000,4.8],[25000,5.2],[60000,5.55],[Infinity,6.6]]},
+  DC:{n:["Distrito de Columbia","District of Columbia"],t:2,d:14600,b:[[10000,4],[40000,6],[60000,6.5],[250000,8.5],[500000,9.25],[Infinity,10.75]]},
+  FL:{n:["Florida","Florida"],t:0},
+  GA:{n:["Georgia","Georgia"],t:1,r:5.39,d:12000},
+  HI:{n:["Hawái","Hawaii"],t:2,d:2200,b:[[2400,1.4],[4800,3.2],[9600,5.5],[14400,6.4],[19200,6.8],[24000,7.2],[36000,7.6],[48000,7.9],[150000,8.25],[175000,9],[200000,10],[Infinity,11]]},
+  ID:{n:["Idaho","Idaho"],t:1,r:5.69,d:16100},
+  IL:{n:["Illinois","Illinois"],t:1,r:4.95,d:2850},
+  IN:{n:["Indiana","Indiana"],t:1,r:3.0,d:1000},
+  IA:{n:["Iowa","Iowa"],t:1,r:3.8,d:2210},
+  KS:{n:["Kansas","Kansas"],t:2,d:3500,b:[[15000,5.2],[Infinity,5.7]]},
+  KY:{n:["Kentucky","Kentucky"],t:1,r:4.0,d:3230},
+  LA:{n:["Luisiana","Louisiana"],t:1,r:3.0,d:12500},
+  ME:{n:["Maine","Maine"],t:2,d:15750,b:[[26050,5.8],[63450,6.75],[Infinity,7.15]]},
+  MD:{n:["Maryland","Maryland"],t:2,d:2550,b:[[1000,2],[2000,3],[3000,4],[100000,4.75],[125000,5],[150000,5.25],[250000,5.5],[Infinity,5.75]]},
+  MA:{n:["Massachusetts","Massachusetts"],t:1,r:5.0,d:4400},
+  MI:{n:["Míchigan","Michigan"],t:1,r:4.25,d:5600},
+  MN:{n:["Minnesota","Minnesota"],t:2,d:16100,b:[[33190,5.35],[107950,6.8],[191850,7.85],[Infinity,9.85]]},
+  MS:{n:["Misisipi","Mississippi"],t:2,d:2300,b:[[10000,0],[Infinity,4.4]]},
+  MO:{n:["Misuri","Missouri"],t:2,d:16100,b:[[9000,3.5],[Infinity,4.7]]},
+  MT:{n:["Montana","Montana"],t:2,d:5540,b:[[20500,4.7],[Infinity,5.9]]},
+  NE:{n:["Nebraska","Nebraska"],t:2,d:7900,b:[[3700,2.46],[22130,3.51],[Infinity,5.2]]},
+  NV:{n:["Nevada","Nevada"],t:0},
+  NH:{n:["Nuevo Hampshire","New Hampshire"],t:0},
+  NJ:{n:["Nueva Jersey","New Jersey"],t:2,d:1000,b:[[20000,1.4],[35000,1.75],[40000,3.5],[75000,5.525],[500000,6.37],[1000000,8],[Infinity,10.75]]},
+  NM:{n:["Nuevo México","New Mexico"],t:2,d:16100,b:[[5500,1.7],[11000,4.7],[16000,4.9],[Infinity,5.9]]},
+  NY:{n:["Nueva York","New York"],t:2,d:8000,b:[[8500,4],[11700,4.5],[13900,5.25],[21400,5.5],[80650,6],[215400,6.85],[1077550,9.65],[5000000,10.3],[Infinity,10.9]]},
+  NC:{n:["Carolina del Norte","North Carolina"],t:1,r:4.25,d:12750},
+  ND:{n:["Dakota del Norte","North Dakota"],t:2,d:16100,b:[[47075,1.1],[238200,2],[Infinity,2.5]]},
+  OH:{n:["Ohio","Ohio"],t:2,d:2400,b:[[26050,0],[100000,2.75],[Infinity,3.5]]},
+  OK:{n:["Oklahoma","Oklahoma"],t:2,d:6350,b:[[1000,0.25],[2500,0.75],[3750,1.75],[4900,2.75],[7200,3.75],[Infinity,4.75]]},
+  OR:{n:["Oregón","Oregon"],t:2,d:2745,b:[[3750,4.75],[9450,6.75],[125000,8.75],[Infinity,9.9]]},
+  PA:{n:["Pensilvania","Pennsylvania"],t:1,r:3.07,d:0},
+  RI:{n:["Rhode Island","Rhode Island"],t:2,d:10400,b:[[77600,3.75],[175600,4.75],[Infinity,5.99]]},
+  SC:{n:["Carolina del Sur","South Carolina"],t:2,d:16100,b:[[3460,0],[17330,3],[Infinity,6.2]]},
+  SD:{n:["Dakota del Sur","South Dakota"],t:0},
+  TN:{n:["Tennessee","Tennessee"],t:0},
+  TX:{n:["Texas","Texas"],t:0},
+  UT:{n:["Utah","Utah"],t:1,r:4.5,d:7000},
+  VT:{n:["Vermont","Vermont"],t:2,d:12450,b:[[45400,3.35],[110050,6.6],[229600,7.6],[Infinity,8.75]]},
+  VA:{n:["Virginia","Virginia"],t:2,d:8500,b:[[3000,2],[5000,3],[17000,5],[Infinity,5.75]]},
+  WA:{n:["Washington","Washington"],t:0},
+  WV:{n:["Virginia Occidental","West Virginia"],t:2,d:2000,b:[[10000,2.22],[25000,2.96],[40000,3.7],[60000,4.44],[Infinity,4.82]]},
+  WI:{n:["Wisconsin","Wisconsin"],t:2,d:13560,b:[[14320,3.5],[28640,4.4],[319580,5.3],[Infinity,7.65]]},
+  WY:{n:["Wyoming","Wyoming"],t:0}
+};
+
+function llenarEstados(){
+  const sel = els.state, antes = sel.value || 'FL';
+  sel.innerHTML = '';
+  for (const code of Object.keys(STATES).sort((a,b) => STATES[a].n[0].localeCompare(STATES[b].n[0], 'es'))){
+    const o = document.createElement('option');
+    o.value = code;
+    o.textContent = STATES[code].n[LANG === 'es' ? 0 : 1];
+    sel.appendChild(o);
+  }
+  sel.value = STATES[antes] ? antes : 'FL';
+}
+
+function impuestoEstatal(anual, code, status){
+  const st = STATES[code];
+  if (!st || st.t === 0) return 0;
+  const factor = status === 'mfj' ? 2 : 1;
+  const base = Math.max(0, anual - (st.d || 0) * factor);
+  if (st.t === 1) return base * st.r / 100;
+  const tramos = st.b.map(([cap, r]) => [cap === Infinity ? Infinity : cap * factor, r / 100]);
+  return impuestoPorTramos(base, tramos);
+}
+
+/* ---------- Conteo animado de las cifras ---------- */
+const mostrado = { gross:0, fwt:0, ss:0, med:0, st:0, net:0, perHour:0, year:0 };
 let rafId = null;
 function pintar(v){
   $('vGross').textContent = fmt(v.gross);
   $('vFwt').textContent = '−' + fmt(v.fwt);
   $('vSs').textContent = '−' + fmt(v.ss);
   $('vMed').textContent = '−' + fmt(v.med);
+  $('vState').textContent = '−' + fmt(v.st);
   $('vNet').textContent = fmt(v.net);
   $('vPerHour').textContent = fmt(v.perHour);
   $('vYear').textContent = fmt(v.year);
@@ -207,45 +383,89 @@ function animar(destino){
 
 function calc(){
   const rate = num(els.rate, 0), hours = num(els.hours, 0);
-  const pF = num(els.rFwt, 6.22) / 100, pS = num(els.rSs, 6.2) / 100, pM = num(els.rMed, 1.45) / 100;
+  const periods = parseInt(els.freq.value, 10) || 52;
+  const status = els.status.value || 'single';
   const gross = r2(rate * hours);
-  const fwt = r2(gross * pF), ss = r2(gross * pS), med = r2(gross * pM);
-  const net = r2(gross - fwt - ss - med);
-  const pct = gross > 0 ? (fwt + ss + med) / gross * 100 : 0;
-  $('pctTotal').textContent = pct.toFixed(2) + ' %';
-  $('lblSs').textContent = '(' + num(els.rSs, 6.2) + ' %)';
-  $('lblMed').textContent = '(' + num(els.rMed, 1.45) + ' %)';
+  const anual = gross * periods;
+
+  const fed = FED[status] || FED.single;
+  const fwtAnual = impuestoPorTramos(Math.max(0, anual - fed.sd), fed.b);
+  const fwt = r2(fwtAnual / periods) + num(els.extra, 0);
+
+  const ss = r2(Math.min(anual, TOPE_SS) * 0.062 / periods);
+  const umbralMed = status === 'mfj' ? 250000 : 200000;
+  const med = r2((anual * 0.0145 + Math.max(0, anual - umbralMed) * 0.009) / periods);
+
+  const st = r2(impuestoEstatal(anual, els.state.value || 'FL', status) / periods);
+
+  const net = r2(gross - fwt - ss - med - st);
+  const totDesc = fwt + ss + med + st;
+  $('pctTotal').textContent = (gross > 0 ? (totDesc / gross * 100) : 0).toFixed(2) + ' %';
+  $('lblFwt').textContent = gross > 0 ? '(≈' + (fwt / gross * 100).toFixed(1) + ' %)' : '';
+  const stInfo = STATES[els.state.value || 'FL'];
+  const stName = stInfo ? stInfo.n[LANG === 'es' ? 0 : 1] : '';
+  $('lblState').textContent = !stInfo || stInfo.t === 0
+    ? '(' + stName + (LANG === 'es' ? ' · sin impuesto' : ' · no state tax') + ')'
+    : '(' + stName + ' · ≈' + (gross > 0 ? (st / gross * 100).toFixed(1) : '0') + ' %)';
+
   const w = v => gross > 0 ? (v / gross * 100) + '%' : '0%';
   $('segNet').style.width = w(net); $('segFwt').style.width = w(fwt);
-  $('segSs').style.width = w(ss); $('segMed').style.width = w(med);
+  $('segSs').style.width = w(ss); $('segMed').style.width = w(med); $('segSt').style.width = w(st);
   const max = parseFloat(els.range.max) || 80;
   els.range.style.setProperty('--p', Math.min(100, hours / max * 100) + '%');
   const netEl = $('vNet');
   if (fmt(net) !== netEl.textContent) { netEl.classList.remove('pulso'); void netEl.offsetWidth; netEl.classList.add('pulso'); }
-  animar({ gross, fwt, ss, med, net, perHour: hours > 0 ? r2(net / hours) : 0, year: r2(net * 52) });
-  try { localStorage.setItem('sueldoMadruga', JSON.stringify({ rate: els.rate.value, hours: els.hours.value, rFwt: els.rFwt.value, rSs: els.rSs.value, rMed: els.rMed.value })); } catch(e){}
+  animar({ gross, fwt, ss, med, st, net, perHour: hours > 0 ? r2(net / hours) : 0, year: r2(net * periods) });
+  try { localStorage.setItem('sueldoMadruga', JSON.stringify({ rate: els.rate.value, hours: els.hours.value, freq: els.freq.value, status: els.status.value, state: els.state.value, extra: els.extra.value })); } catch(e){}
 }
 
 els.rate.addEventListener('input', calc);
 els.hours.addEventListener('input', () => { els.range.value = els.hours.value; calc(); });
 els.range.addEventListener('input', () => { els.hours.value = els.range.value; calc(); });
-[els.rFwt, els.rSs, els.rMed].forEach(e => e.addEventListener('input', calc));
+[els.freq, els.status, els.state, els.extra].forEach(e => e.addEventListener('input', calc));
+els.extra.addEventListener('input', calc);
 
+llenarEstados();
 try {
   const saved = JSON.parse(localStorage.getItem('sueldoMadruga') || 'null');
   if (saved) { for (const k in saved) if (els[k]) els[k].value = saved[k]; els.range.value = els.hours.value; }
 } catch(e){}
 
 function setLang(l){
+  LANG = l;
   document.querySelectorAll('[data-es]').forEach(n => { n.textContent = n.dataset[l]; });
   document.documentElement.lang = l;
   $('btnEs').classList.toggle('on', l === 'es');
   $('btnEn').classList.toggle('on', l === 'en');
+  llenarEstados();
   calc();
 }
 $('btnEs').addEventListener('click', () => setLang('es'));
 $('btnEn').addEventListener('click', () => setLang('en'));
 calc();
+
+/* ---------- Instalar como app (PWA) ---------- */
+if ('serviceWorker' in navigator) {
+  try { navigator.serviceWorker.register('sw.js'); } catch(e){}
+}
+const btnInstall = $('btnInstall'), installHelp = $('installHelp');
+const esInstalada = () => window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+if (esInstalada()) btnInstall.style.display = 'none';
+let deferredPrompt = null;
+window.addEventListener('beforeinstallprompt', (e) => { e.preventDefault(); deferredPrompt = e; });
+window.addEventListener('appinstalled', () => { btnInstall.style.display = 'none'; installHelp.hidden = true; });
+btnInstall.addEventListener('click', async () => {
+  if (deferredPrompt) {
+    deferredPrompt.prompt();
+    try {
+      const res = await deferredPrompt.userChoice;
+      if (res && res.outcome === 'accepted') btnInstall.style.display = 'none';
+    } catch(e){}
+    deferredPrompt = null;
+  } else {
+    installHelp.hidden = !installHelp.hidden;
+  }
+});
 </script>
 </body>
 </html>
